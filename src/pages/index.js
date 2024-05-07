@@ -28,7 +28,6 @@ const Predictions = () => {
     }
   };
 
-  // return a bar chart besides the text area, each bar represents a label and its height represents the value of the label in the predictions
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Comment Analyzer</h1>
@@ -41,20 +40,35 @@ const Predictions = () => {
         />
       </div>
       <button className={styles.button} onClick={handlePredict}>Show</button>
-      <div> 
-        {predictions && (
-          <div className={styles.predictions}>
-            <h2>Predictions:</h2>
+      <div>
+  {predictions && (
+    <div className={styles.predictions}>
+      <h2>Predictions:</h2>
+      <ul>
+        {Object.entries(predictions).map(([modelName, modelResult]) => (
+          <li key={modelName}>
+            <h3>{modelName}</h3>
             <ul>
-              {predictions.map(prediction => (
-                <li key={prediction.label}>
-                  <strong>{prediction.label}:</strong> {prediction.value}
+              {modelResult.map((result, index) => (  
+                <li key={index}>
+                  <div className={styles.modelResult}>
+                    {Object.entries(result).map(([label, value]) => (
+                      <span key={label}>
+                        {value.toString()} &nbsp;&nbsp;
+                      </span>
+                    ))}
+                  </div>
                 </li>
               ))}
             </ul>
-          </div>
-        )}
-      </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  )}
+</div>
+
+
     </div>
   );
 };
